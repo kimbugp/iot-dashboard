@@ -20,7 +20,9 @@ from rest_framework.documentation import include_docs_urls
 core_schema_view = include_docs_urls(title='API')
 
 urlpatterns = [
+
     path('admin/', admin.site.urls),
+    path('', include(('fend.urls', 'fend'), namespace='fend')),
     path('api/users/', include(('apps.authentication.urls', 'users'),
                                namespace='users')),
     path('', core_schema_view),
