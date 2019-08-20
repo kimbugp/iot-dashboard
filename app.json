@@ -1,5 +1,5 @@
 {
-    "name": "collector",
+    "name": "IOT Dashboard",
     "scripts": {},
     "env": {
         "SECRET_KEY": {
