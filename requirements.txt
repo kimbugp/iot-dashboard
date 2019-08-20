@@ -2,7 +2,7 @@ djangorestframework==3.9.2
 psycopg2-binary
 gunicorn==19.9.0
 dj-database-url==0.5.0
-Django==2.2.3
+django>=2.2.4
 PyJWT==1.4.2
 social-auth-app-django==3.1.0
 coreapi==2.3.3
