@@ -1,0 +1,22 @@
+language: python
+python: 
+  - "3.6"
+
+addons:
+  postgresql: "9.6"
+
+install: 
+  - pip install pipenv
+  - pipenv install --skip-lock
+  - pip install coveralls flake8
+
+before_script:
+  - psql -c 'create database testdb;' -U postgres
+  - python manage.py migrate
+
+script:
+  - pytest
+  - flake8
+
+after_success:
+  - coveralls
