@@ -10,7 +10,7 @@ export default props => (
   <BrowserRouter >
     <ScrollToTop>
       <Switch>
-        <PrivateRoute exact path='/dashboard' component={Dashboard} roles={[]}/>
+        <PrivateRoute exact path='/dashboard' component={Dashboard}/>
         <Route exact path='/' component={LandingPage} />
         <Route component={notFound} exact strict />
       </Switch>
@@ -18,16 +18,12 @@ export default props => (
   </BrowserRouter>
 )
 
-export const PrivateRoute = ({ component: Component, roles = [], ...rest }) => (
+export const PrivateRoute = ({ component: Component,...rest }) => (
   <Route {...rest} render={props => {
     const isLoggedIn = Authenticate()
     if (isLoggedIn === false) {
       authentication.signout()
       return <Redirect to={{ pathname: '/', state: { from: props.location } }} />
-    }
-    let values = roles.map(value => (isLoggedIn[value]))
-    if (values.len>0 &&values.every(x => x === true)) {
-      return <Redirect to={{ pathname: '/dashboard', state: { from: props.location } }} />
     }
     return <Component {...props} />
   }} />

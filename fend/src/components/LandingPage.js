@@ -19,14 +19,14 @@ const styles = {
 };
 class LandingPage extends Component {
 
-    componentWillMount() {
+    componentDidMount() {
         window.gapi.load('auth2', _ => {
             console.log('loaded GAPI')
             function initGAPI() {
-                if (!window.gapi || window.gapi.client) { return reject('no window.gapi.client') }
+                if (!window.gapi || window.gapi.client) { return 'no window.gapi.client' }
 
                 window.gapi.auth2.init({
-                    client_id: '715095933691-i190sabpa75e3ltg0ccjq326d5l3gv2h.apps.googleusercontent.com'
+                    client_id: '196379646120-3k17k4tt13ktffc6hr6krsb8d3g2grde.apps.googleusercontent.com'
                 }).then(() => {
                     window.gapi.signin2.render('g-signin2', {
                         'scope': 'profile email',
@@ -37,19 +37,21 @@ class LandingPage extends Component {
                     })
                 }).catch(error => {
                     closeError()
-                    return reject(error)
+                    return error
                 })
             }
-            setTimeout(initGAPI, 100)
+            // setTimeout(initGAPI, 100)
+            initGAPI()
         })
     }
 
     onSignIn = async (googleUser) => {
         var profile = googleUser.getBasicProfile();
         var access_token = googleUser.Zi.access_token
-        let res = await socialAction({ access_token: `${access_token}` });
+        console.log(googleUser)
+        let res = this.props.socialAction({ access_token: `${access_token}` });
         debugger;
-        authentication.login(`google-oauth2  ${access_token}`, res, profile)
+        await authentication.login(`google-oauth2  ${access_token}`, res, profile)
         if (this.props.location.state instanceof (Object)) {
             this.props.history.push(this.props.location.state.from.pathname)
         }
@@ -64,7 +66,7 @@ class LandingPage extends Component {
         this.props.loginAction(this.state)
     }
 
-    componentWillReceiveProps(nextProps) {        
+    componentWillReceiveProps(nextProps) {
         if (nextProps.user !== this.props.user) {
             authentication.login(nextProps.user.token, nextProps.user.token, '')
             this.props.history.push('/dashboard')
@@ -109,4 +111,4 @@ class LandingPage extends Component {
 const mapStateToProps = ({ userReducer }) => ({
     user: userReducer.user
 });
-export default connect(mapStateToProps, { loginAction })(withRouter(withStyles(styles)(LandingPage)));
+export default connect(mapStateToProps, { loginAction, socialAction })(withRouter(withStyles(styles)(LandingPage)));

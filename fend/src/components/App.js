@@ -35,7 +35,6 @@ export class App extends Component {
         return (
             <Provider store={store}>
                 <MuiThemeProvider theme={theme}>
-                    {/* <ErrorService /> */}
                     <Routes />
                 </MuiThemeProvider>
             </Provider>

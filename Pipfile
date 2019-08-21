@@ -8,6 +8,8 @@ pep8 = "*"
 autopep8 = "*"
 flake8 = "*"
 bandit = "*"
+pytest-django = "==3.5.1"
+pytest-cov = "==2.7.1"
 
 [packages]
 djangorestframework = "==3.9.2"

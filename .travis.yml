@@ -6,9 +6,8 @@ addons:
   postgresql: "9.6"
 
 install: 
-  - pip install pipenv
-  - pipenv install --skip-lock
-  - pip install coveralls flake8
+  - pip install -r requirements.txt
+  - pip install coveralls
 
 before_script:
   - psql -c 'create database testdb;' -U postgres

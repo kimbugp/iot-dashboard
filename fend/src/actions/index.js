@@ -1,6 +1,6 @@
 import requests from 'axios' ;
 
-export const BASE_URL = 'http://127.0.0.1:3000';
+export const BASE_URL = 'http://localhost:8000';
 export const SOCIAL_LOGIN_URL = `${BASE_URL}/api/users/social/`;
 export const LOGIN_URL = `${BASE_URL}/api/users/login`;
 
