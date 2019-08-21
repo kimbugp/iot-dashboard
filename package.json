@@ -9,7 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --mode development --watch ./fend/src/index.js --output ./fend/static/fend/main.js",
-    "build": "webpack --mode production ./fend/src/index.js --output ./fend/static/fend/main.js"
+    "build": "webpack --mode production ./fend/src/index.js --output ./fend/static/fend/main.js",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",

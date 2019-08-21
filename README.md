@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/kimbugp/iot-dashboard.svg?branch=master)](https://travis-ci.org/kimbugp/iot-dashboard)
 # iot-dashboard
 A web application that primarily displays sensor data through different types of visualizations.
 

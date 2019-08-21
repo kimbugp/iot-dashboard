@@ -22,36 +22,33 @@ class LandingPage extends Component {
     componentDidMount() {
         window.gapi.load('auth2', _ => {
             console.log('loaded GAPI')
-            function initGAPI() {
-                if (!window.gapi || window.gapi.client) { return 'no window.gapi.client' }
+            this.initGAPI()
+        })
+    }
+    initGAPI = () => {
+        if (!window.gapi || window.gapi.client) { return 'no window.gapi.client' }
 
-                window.gapi.auth2.init({
-                    client_id: '196379646120-3k17k4tt13ktffc6hr6krsb8d3g2grde.apps.googleusercontent.com'
-                }).then(() => {
-                    window.gapi.signin2.render('g-signin2', {
-                        'scope': 'profile email',
-                        'longtitle': false,
-                        'class': 'g-signin2',
-                        'onsuccess': this.onSignIn,
-                        'onfailure': this.onSignIn
-                    })
-                }).catch(error => {
-                    closeError()
-                    return error
-                })
-            }
-            // setTimeout(initGAPI, 100)
-            initGAPI()
+        window.gapi.auth2.init({
+            client_id: '196379646120-3k17k4tt13ktffc6hr6krsb8d3g2grde.apps.googleusercontent.com'
+        }).then(() => {
+            window.gapi.signin2.render('g-signin2', {
+                'scope': 'profile email',
+                'longtitle': false,
+                'class': 'g-signin2',
+                'onsuccess': this.onSignIn,
+                'onfailure': this.onSignIn
+            })
+        }).catch(error => {
+            closeError()
+            return error
         })
     }
 
     onSignIn = async (googleUser) => {
         var profile = googleUser.getBasicProfile();
         var access_token = googleUser.Zi.access_token
-        console.log(googleUser)
-        let res = this.props.socialAction({ access_token: `${access_token}` });
-        debugger;
-        await authentication.login(`google-oauth2  ${access_token}`, res, profile)
+        let res = await socialAction({ access_token: `${access_token}` });
+        authentication.login(`google-oauth2  ${access_token}`, res, profile)
         if (this.props.location.state instanceof (Object)) {
             this.props.history.push(this.props.location.state.from.pathname)
         }
@@ -111,4 +108,4 @@ class LandingPage extends Component {
 const mapStateToProps = ({ userReducer }) => ({
     user: userReducer.user
 });
-export default connect(mapStateToProps, { loginAction, socialAction })(withRouter(withStyles(styles)(LandingPage)));
+export default connect(mapStateToProps, { loginAction })(withRouter(withStyles(styles)(LandingPage)));

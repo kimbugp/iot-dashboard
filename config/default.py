@@ -16,8 +16,8 @@ import os
 import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = BASE_DIR = os.path.dirname(
-    os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "not secure")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG")
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'mirest-iotdashboard.herokuapp.com']
 
 
 # Application definition
@@ -138,6 +138,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.google.GoogleOAuth',
@@ -179,5 +180,5 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.create_user',
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.social_auth.load_extra_data',
-    'utils.details_updater.user_details',
+    'apps.utils.details_updater.user_details',
 )
