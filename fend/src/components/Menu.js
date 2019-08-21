@@ -1,23 +1,3 @@
-const ServicesMenu = [
-  {
-    label: "Houses",
-    pathname: "/services/houses"
-  },
-  {
-    label: "Tenants",
-    pathname: "/services/tenants"
-  },
-  {
-    label: "Receipting",
-    pathname: "/services/receipts"
-  },
-  {
-    label: "Reports",
-    pathname: "/services/reports"
-  }
-
-];
-
 export const landingMenu = [
   {
     label: "Dashboard",
@@ -33,4 +13,3 @@ export const landingMenu = [
   }
 ];
 
-export default ServicesMenu;

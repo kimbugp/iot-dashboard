@@ -6,7 +6,6 @@ import { closeError } from "../actions/errors"
 class ErrorService extends Component {
     render() {
         return (
-            console.log(this.props),
             <React.Fragment>
                 <Snackbar
                     anchorOrigin={{

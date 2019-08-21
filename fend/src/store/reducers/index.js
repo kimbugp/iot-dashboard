@@ -3,8 +3,9 @@ import userReducer from "./user";
 import { ERROR, NO_ERROR } from "../../actions/actionTypes";
 
 const initialState = {
-  view: true
+  view: false
 };
+
 function errorReducer(state = initialState, action) {
   switch (action.type) {
     case ERROR:

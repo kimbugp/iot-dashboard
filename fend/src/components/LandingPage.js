@@ -6,9 +6,9 @@ import Grid from '@material-ui/core/Grid';
 import NavBar from './NavBar'
 import Signin from "../others/login"
 import { authentication } from "../authentication";
-import loginAction, { socialAction } from '../actions/login';
+import loginAction, { socialAction } from '../actions/login'
 import { connect } from "react-redux";
-
+import { closeError } from '../actions/errors';
 
 
 const styles = {
@@ -20,18 +20,27 @@ const styles = {
 class LandingPage extends Component {
 
     componentWillMount() {
-        window.gapi.load('auth2', () => {
-            window.gapi.auth2.init({
-                client_id: '715095933691-i190sabpa75e3ltg0ccjq326d5l3gv2h.apps.googleusercontent.com'
-            }).then(() => {
-                window.gapi.signin2.render('g-signin2', {
-                    'scope': 'profile email',
-                    'longtitle': false,
-                    'class': 'g-signin2',
-                    'onsuccess': this.onSignIn,
-                    'onfailure': this.onSignIn
+        window.gapi.load('auth2', _ => {
+            console.log('loaded GAPI')
+            function initGAPI() {
+                if (!window.gapi || window.gapi.client) { return reject('no window.gapi.client') }
+
+                window.gapi.auth2.init({
+                    client_id: '715095933691-i190sabpa75e3ltg0ccjq326d5l3gv2h.apps.googleusercontent.com'
+                }).then(() => {
+                    window.gapi.signin2.render('g-signin2', {
+                        'scope': 'profile email',
+                        'longtitle': false,
+                        'class': 'g-signin2',
+                        'onsuccess': this.onSignIn,
+                        'onfailure': this.onSignIn
+                    })
+                }).catch(error => {
+                    closeError()
+                    return reject(error)
                 })
-            })
+            }
+            setTimeout(initGAPI, 100)
         })
     }
 
@@ -55,7 +64,7 @@ class LandingPage extends Component {
         this.props.loginAction(this.state)
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) {        
         if (nextProps.user !== this.props.user) {
             authentication.login(nextProps.user.token, nextProps.user.token, '')
             this.props.history.push('/dashboard')
