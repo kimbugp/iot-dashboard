@@ -20,7 +20,6 @@ BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.abspath(__file__)))
 
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -52,6 +51,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -98,7 +98,7 @@ DATABASES = {
 
 
 DATABASES['default'] = dj_database_url.config(
-    default=os.environ.get("DATABASE_URL", None))
+    default=os.environ.get("DATABASE_URL", 'sqlite://:memory:'))
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
