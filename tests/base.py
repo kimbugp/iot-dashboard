@@ -9,8 +9,7 @@ from authentication.models import User
 
 
 class BaseTestCase(TestCase):
-    fixtures = ['fixtures/users.json', 'fixtures/houses.json',
-                'fixtures/payments.json']
+    fixtures = ['fixtures/users.json']
 
     def setUp(self):
         self.client = APIClient()
