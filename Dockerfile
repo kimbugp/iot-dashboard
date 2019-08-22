@@ -19,4 +19,4 @@ COPY --from=node_stage app/main.js fend/static/fend
 ENV DJANGO_SETTINGS_MODULE config.default
 ENV PYTHONUNBUFFERED 1
 
-CMD ["gunicorn", "config.wsgi","-b 0.0.0.0"]
+CMD ["gunicorn", "config.wsgi","-b 0.0.0.0:8000"]
