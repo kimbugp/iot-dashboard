@@ -1,15 +1,22 @@
-FROM python:3.7-alpine AS python_env
+FROM node:10.15-slim as node_stage
+RUN mkdir /app
+WORKDIR /app
 COPY . .
-
-ENV PYTHONUNBUFFERED 1
-RUN pip install -r requirements.txt
-
-
-FROM node:10.15-slim
-COPY --from=python_env . .
-ENV DJANGO_SETTINGS_MODULE config.default
 RUN npm install
 RUN npm run build
-CMD ["gunicorn", "config.wsgi","-b 0.0.0.0"]
 
-EXPOSE 80 8080 8000
+COPY fend/static/fend/main.js .
+
+
+FROM python:3.7
+RUN mkdir /code
+WORKDIR /code
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+COPY --from=node_stage app/main.js fend/static/fend
+
+ENV DJANGO_SETTINGS_MODULE config.default
+ENV PYTHONUNBUFFERED 1
+
+CMD ["gunicorn", "config.wsgi","-b 0.0.0.0"]
