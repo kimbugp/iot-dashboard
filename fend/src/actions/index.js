@@ -1,6 +1,6 @@
 import requests from 'axios';
 
-export const BASE_URL = `${window.location.protocol}://${window.location.host}:${window.location.port}`;
+export const BASE_URL = 'https://mirest-iotdashboard.herokuapp.com';
 export const SOCIAL_LOGIN_URL = `${BASE_URL}/api/users/social/`;
 export const LOGIN_URL = `${BASE_URL}/api/users/login`;
 

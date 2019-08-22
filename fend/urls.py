@@ -1,7 +1,7 @@
-from django.urls import path
+from django.urls import path, re_path
 
-from .views import index
+from .views import UIView
 
 urlpatterns = [
-    path('', index)
+    re_path(r'^(?:.*)/?$', UIView.as_view())
 ]

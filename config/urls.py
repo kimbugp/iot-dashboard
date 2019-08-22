@@ -13,8 +13,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import os
+
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path, re_path
+from django.views.generic.base import TemplateView
 from rest_framework.documentation import include_docs_urls
 
 core_schema_view = include_docs_urls(title='IOT DASHBOARD')
@@ -22,8 +25,9 @@ core_schema_view = include_docs_urls(title='IOT DASHBOARD')
 urlpatterns = [
 
     path('admin/', admin.site.urls),
-    path('', include(('fend.urls', 'fend'), namespace='fend')),
     path('api/users/', include(('apps.authentication.urls', 'users'),
                                namespace='users')),
-    path('', core_schema_view),
+    path('apidocs', core_schema_view),
+    path('', include(('fend.urls', 'fend'),
+                     namespace='fend')),
 ]
