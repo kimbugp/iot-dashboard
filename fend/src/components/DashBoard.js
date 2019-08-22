@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 
 const pagination = {
     display: 'flex',
-    'margin-left': '30%'
+    marginLeft: '30%'
 }
 const span = {
     cursor: 'pointer',
@@ -23,16 +23,21 @@ const span = {
 
 class Dashboard extends Component {
 
-    state = {
-        data: []
+    constructor(props) {
+        super(props);
+        this.state = { data: [] };
+        this.chart;
     }
+
     componentDidMount() {
         this.props.getGraphdata(1)
+        this.chart = this.refs.page.refs.chart.chart;
     }
-    onClick = (event) => {
+
+    exportChart = (event) => {
         event.preventDefault()
-        this.props.getGraphdata(1)
-    }
+        this.chart.exportChart();
+    };
 
     render() {
         const { classes } = this.props;
@@ -41,7 +46,7 @@ class Dashboard extends Component {
             <React.Fragment>
                 <CssBaseline />
                 <NavBar login={true} currentPath={currentPath} />
-                {/* <button onClick={this.onClick}>Update Series</button> */}
+                {/* <button onClick={this.exportChart}>Download Graph</button> */}
                 <div style={pagination} align="center">
                     <span style={span} onClick={() => this.props.getGraphdata(1)}>PM2.5 ug/m3</span>
                     <span style={span} onClick={() => this.props.getGraphdata(2)}>PM10 ug/m3</span>
@@ -50,7 +55,7 @@ class Dashboard extends Component {
                     <span style={span} onClick={() => this.props.getGraphdata(5)}>Heat Index</span>
                 </div>
                 <div className={classes.root}>
-                    <Chart options={this.props.options} />
+                    <Chart options={this.props.options} chartobj={this.props.chart} constructorType={"page"} ref={"page"} />
                 </div>
             </React.Fragment>
         )
