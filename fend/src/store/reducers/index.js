@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import userReducer from "./user";
+import userReducer, { graphDataReducer } from "./user";
 import { ERROR, NO_ERROR } from "../../actions/actionTypes";
 
 const initialState = {
@@ -25,7 +25,8 @@ function errorReducer(state = initialState, action) {
 
 const reducers = combineReducers({
   userReducer,
-  errorReducer
+  errorReducer,
+  graphDataReducer
 });
 
 export default reducers;

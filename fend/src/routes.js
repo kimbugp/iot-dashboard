@@ -10,7 +10,7 @@ export default props => (
   <BrowserRouter >
     <ScrollToTop>
       <Switch>
-        <PrivateRoute exact path='/dashboard' component={Dashboard}/>
+        <Route exact path='/dashboard' component={Dashboard}/>
         <Route exact path='/' component={LandingPage} />
         <Route component={notFound} exact strict />
       </Switch>
