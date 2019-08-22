@@ -104,3 +104,4 @@ venv.bak/
 .mypy_cache/
 node_modules
 fend/static/fend/main.js
+redis-stable/
