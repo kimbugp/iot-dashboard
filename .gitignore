@@ -105,3 +105,4 @@ venv.bak/
 node_modules
 fend/static/fend/main.js
 redis-stable/
+.vscode

@@ -26,6 +26,18 @@ class TestUsersEndpoints(BaseTestCase):
         assert user.__str__() == user.email
         assert isinstance(user, User)
 
+    def test_delete_succeeds(self):
+        user = User.objects.first()
+        user.hard_delete()
+
+    def test_soft_delete_succeeds(self):
+        user = User.objects.first()
+        user.delete()
+
+    def test_get_succeeds(self):
+        user = User.objects.get_queryset()
+        user.delete()
+
     def test_user_manager_creates_user_fails(self):
         manager = UserManager()
         manager.model = User

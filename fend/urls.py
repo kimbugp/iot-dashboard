@@ -1,7 +1,9 @@
-from django.urls import re_path
+from django.urls import re_path, path
 
-from .views import UIView
+from .views import UIView, SensorData, CurrentData
 
 urlpatterns = [
-    re_path(r'^(?:.*)/?$', UIView.as_view())
+    path('sensor', SensorData.as_view()),
+    path('sensor/current', CurrentData.as_view()),
+    re_path(r'^(?:.*)/?$', UIView.as_view()),
 ]

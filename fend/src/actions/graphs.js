@@ -1,14 +1,15 @@
 import axios from 'axios';
 import { GRAPH } from './actionTypes';
-
-const getGraphdata = (number) => {
+import { GRAPH_URL, SINGLE_SENSOR } from './index';
+const getGraphdata = (field) => {
     return async dispatch => {
         try {
-            let res = await axios.get(`https://thingspeak.com/channels/338402/field/${number}.json`)
+            let number = 1
+            let res = await axios.get(`${GRAPH_URL}?field=${field}&page=${number}`)
             dispatch({
                 type: GRAPH,
                 payload: res,
-                field: `field${number}`
+                field: `field${field}`
             });
         }
         catch (error) {
