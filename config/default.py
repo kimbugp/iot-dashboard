@@ -70,9 +70,11 @@ CACHES = {
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient"
         },
-        "KEY_PREFIX": "example"
+        "KEY_PREFIX": "iot"
     }
 }
+
+CACHES_TTL = 60 * 5
 
 
 CORS_ORIGIN_WHITELIST = (

@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { GRAPH } from './actionTypes';
-import { GRAPH_URL, SINGLE_SENSOR } from './index';
+import axios, { GRAPH_URL } from './index';
+
 const getGraphdata = (field) => {
     return async dispatch => {
         try {

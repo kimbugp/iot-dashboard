@@ -1,16 +1,23 @@
-from rest_framework import generics
-from rest_framework.response import Response
-from django.views.generic.base import TemplateView
 import requests
+from django.conf import settings
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.generic.base import TemplateView
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+CACHE_TTL = getattr(settings, 'CACHE_TTL', 60*3)
 
 
 class UIView(TemplateView):
-
     template_name = "fend/index.html"
 
 
 class SensorData(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
 
+    @method_decorator(cache_page(CACHE_TTL))
     def get(self, request, **kwargs):
         page = request.query_params.get('page', 1)
         field = request.query_params.get('field', 1)
@@ -28,6 +35,7 @@ class SensorData(generics.ListAPIView):
 
 
 class CurrentData(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, **kwargs):
         field = request.query_params.get('page', 1)
