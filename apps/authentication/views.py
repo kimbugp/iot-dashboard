@@ -40,25 +40,15 @@ class LoginView(generics.CreateAPIView):
 class UserView(generics.RetrieveAPIView):
     serializer_class = NormalUserSerializer
     permission_classes = (DjangoModelPermissions, IsAuthenticated)
-    queryset = User.objects.none()
+    queryset = User.objects.all()
 
     def get(self, request):
         serializer = self.serializer_class(request.user)
         return Response(serializer.data)
 
 
-class TenantsView(generics.ListAPIView):
-    """Get all tenants
-    """
-    pagination_class = None
-    serializer_class = NormalUserSerializer
-    queryset = User.objects.all()
-    permission_classes = (DjangoModelPermissions, IsAdminUser)
-
-
 class UsersView(generics.ListAPIView, generics.CreateAPIView):
     "Get all users"
-    pagination_class = None
     queryset = User.objects.all()
     serializer_class = NormalUserSerializer
     permission_classes = (DjangoModelPermissions, IsAdminUser)

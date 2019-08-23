@@ -3,7 +3,7 @@ from tests.base import BaseTestCase
 from .models import User, UserManager
 
 
-class TestUsers(BaseTestCase):
+class TestUsersEndpoints(BaseTestCase):
 
     def test_login_is_successfull(self):
         response = self.post_put_response('users:login', self.user_data())
@@ -18,12 +18,7 @@ class TestUsers(BaseTestCase):
         response = self.get_delete_response('users:user')
         self.assertEqual(200, response.status_code)
 
-    def test_create_user_fails(self):
-        response = self.post_put_response('users:tenants', self.user_data(
-            email='kk@kd.com', name='dimo', phonenumber="3", username='asdf'))
-        self.assertEqual(201, response.status_code)
-
-    def test_user_manager_creates_user_succeds(self):
+    def test_user_manager_creates_user_succeeds(self):
         manager = UserManager()
         manager.model = User
         user = manager.create_superuser(

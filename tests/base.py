@@ -1,11 +1,10 @@
 import json
 
+from apps.authentication.models import User
 from django.test import TestCase
 from django.urls import reverse as django_reverse
 from django.utils.http import urlencode
 from rest_framework.test import APIClient
-
-from authentication.models import User
 
 
 class BaseTestCase(TestCase):
