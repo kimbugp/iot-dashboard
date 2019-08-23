@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export default class DatePicker extends Component {
     render() {
         return (
-            <div id="chart-container">
+            <div id="chart-container" style={this.props.style}>
                 <form onSubmit={this.props.onSubmit}>
                     Choose Date range
                     <input type="date" name="start" onChange={this.props.onChange} />

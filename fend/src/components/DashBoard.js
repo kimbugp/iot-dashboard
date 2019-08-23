@@ -75,7 +75,7 @@ class Dashboard extends Component {
             <React.Fragment>
                 <CssBaseline />
                 <NavBar login={true} currentPath={currentPath} />
-                <DatePicker onChange={this.onChange} onSubmit={this.onSubmit} />
+                <DatePicker onChange={this.onChange} onSubmit={this.onSubmit} style={pagination} />
                 <div style={pagination} align="center">
                     {tables.map((item, index) => <span style={span} id={index + 1} key={index + 1} onClick={this.onClick}>{item}</span>)}
                 </div>
