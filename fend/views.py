@@ -33,7 +33,8 @@ class SensorData(generics.ListAPIView):
                 f'https://thingspeak.com/channels/338402/field/{field}.json?results={number}&page={page}&start={start}&end={end}')  # noqa
             if response.status_code == 200:
                 data = response.json()
-            return Response(data)
+                return Response(data)
+            return Response({'error': 'no data'}, 400)
         except requests.exceptions.RequestException:
             return Response({'error': 'no data'}, 400)
 
@@ -48,6 +49,7 @@ class CurrentData(generics.ListAPIView):
                 f'https://thingspeak.com/channels/338402/field/{field}/last.json')  # noqa
             if response.status_code == 200:
                 data = response.json()
-            return Response(data)
+                return Response(data)
+            return Response({'error': 'no data'}, 400)
         except requests.exceptions.RequestException:
             return Response({'error': 'no data'}, 400)

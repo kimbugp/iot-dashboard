@@ -7,6 +7,7 @@ import styles from '../styles/dashBoard';
 import Chart from './plotter';
 import getGraphdata from '../actions/graphs'
 import { connect } from "react-redux";
+import DatePicker from './datepicker';
 
 const pagination = {
     display: 'flex',
@@ -25,12 +26,19 @@ class Dashboard extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { data: [] };
+        this.state = {
+            end: '2019-08-15',
+            start: '2018-08-15',
+            page: 1,
+            field: 1,
+            number: 100
+        }
         this.chart;
     }
 
     componentDidMount() {
-        this.props.getGraphdata(1)
+        let queryString = Object.keys(this.state).map(key => key + '=' + this.state[key]).join('&');
+        this.props.getGraphdata(this.state.field, queryString)
         this.chart = this.refs.page.refs.chart.chart;
     }
 
@@ -39,20 +47,37 @@ class Dashboard extends Component {
         this.chart.exportChart();
     };
 
+    onSubmit = (event) => {
+        event.preventDefault()
+        let queryString = Object.keys(this.state).map(key => key + '=' + this.state[key]).join('&');
+        this.props.getGraphdata(this.state.field, queryString)
+    }
+
+    onChange = () => {
+        this.setState({ [event.target.name]: event.target.value })
+    }
+
+    onClick = (event) => {
+        event.preventDefault()
+        let state = this.state
+        state.field = parseInt(event.target.id)
+        let queryString = Object.keys(state).map(key => key + '=' + state[key]).join('&');
+        this.props.getGraphdata(state.field, queryString)
+    }
+
+
     render() {
         const { classes } = this.props;
         const currentPath = this.props.location.pathname
+
+        const tables = ['PM2.5 ug/m3', 'PM10 ug/m3', 'Temperature', 'Humidity', 'Heat Index']
         return (
             <React.Fragment>
                 <CssBaseline />
                 <NavBar login={true} currentPath={currentPath} />
-                {/* <button onClick={this.exportChart}>Download Graph</button> */}
+                <DatePicker onChange={this.onChange} onSubmit={this.onSubmit} />
                 <div style={pagination} align="center">
-                    <span style={span} onClick={() => this.props.getGraphdata(1)}>PM2.5 ug/m3</span>
-                    <span style={span} onClick={() => this.props.getGraphdata(2)}>PM10 ug/m3</span>
-                    <span style={span} onClick={() => this.props.getGraphdata(3)}>Temperature</span>
-                    <span style={span} onClick={() => this.props.getGraphdata(4)}>Humidity</span>
-                    <span style={span} onClick={() => this.props.getGraphdata(5)}>Heat Index</span>
+                    {tables.map((item, index) => <span style={span} id={index + 1} key={index + 1} onClick={this.onClick}>{item}</span>)}
                 </div>
                 <div className={classes.root}>
                     <Chart options={this.props.options} chartobj={this.props.chart} constructorType={"page"} ref={"page"} />

@@ -1,11 +1,10 @@
 import { GRAPH } from './actionTypes';
 import axios, { GRAPH_URL } from './index';
 
-const getGraphdata = (field) => {
+const getGraphdata = (field, query) => {
     return async dispatch => {
         try {
-            let number = 1
-            let res = await axios.get(`${GRAPH_URL}?field=${field}&page=${number}`)
+            let res = await axios.get(`${GRAPH_URL}?${query}`)
             dispatch({
                 type: GRAPH,
                 payload: res,
