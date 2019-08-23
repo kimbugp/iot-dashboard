@@ -6,6 +6,7 @@ from django.views.generic.base import TemplateView
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from .fend_serializer import ParamSerializer
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', 60*3)
 
@@ -16,14 +17,17 @@ class UIView(TemplateView):
 
 class SensorData(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
+    serializer_class = ParamSerializer
 
     @method_decorator(cache_page(CACHE_TTL))
     def get(self, request, **kwargs):
-        page = request.query_params.get('page', 1)
-        field = request.query_params.get('field', 1)
-        number = request.query_params.get('number', 100)
-        start = request.query_params.get('start', '2018-10-10')
-        end = request.query_params.get('end', '2019-10-10')
+        serializer = self.serializer_class(data=request.query_params)
+        serializer.is_valid(raise_exception=True)
+        page = serializer.validated_data.get('page', 1)
+        field = serializer.validated_data.get('field', 1)
+        number = serializer.validated_data.get('number', 100)
+        start = serializer.validated_data.get('start', '2018-10-10')
+        end = serializer.validated_data.get('end', '2019-10-10')
         try:
             response = requests.get(
                 f'https://thingspeak.com/channels/338402/field/{field}.json?results={number}&page={page}&start={start}&end={end}')  # noqa
