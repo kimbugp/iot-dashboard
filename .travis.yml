@@ -2,6 +2,9 @@ language: python
 python: 
   - "3.6"
 
+services:
+  - redis-server
+
 addons:
   postgresql: "9.6"
 
@@ -11,7 +14,7 @@ install:
 
 before_script:
   - psql -c 'create database testdb;' -U postgres
-
+  
 script:
   - pytest
   - flake8
